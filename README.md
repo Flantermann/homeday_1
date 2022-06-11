@@ -1,12 +1,12 @@
 # README
 
-# _Homeday1_
+# Homeday1
 
-#### _An Api to match a seller with the nearest available Homeday realtor_
+#### An Api to match a seller with the nearest available Homeday realtor
 
 ## Technologies Used
 
-* ruby on rails
+* Ruby on Rails, ruby version 3.0.2, Rails version 7.0.3
 
 ## Description
 
