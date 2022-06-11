@@ -2,16 +2,11 @@
 
 # _Homeday1_
 
-#### By Flantermann_
-
-#### _{Brief description of application}_
+#### _An Api to match a seller with the nearest available Homeday realtor_
 
 ## Technologies Used
 
-* _List all_
-* _the major technologies_
-* _you used in your project_
-* _here_
+* ruby on rails
 
 ## Description
 
