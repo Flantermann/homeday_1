@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# needs test for associations
+# maybe write test to check if lat/lng correspond to correct address?
+
 # Test suite for the Appointment model
 RSpec.describe Appointment, type: :model do
   # Validation test
