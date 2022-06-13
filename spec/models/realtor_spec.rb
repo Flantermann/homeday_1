@@ -25,12 +25,12 @@ RSpec.describe Realtor, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it "is not valid without a latitude" do
+  it "is not valid without latitude" do
     subject.lat = nil
     expect(subject).to_not be_valid
   end
 
-  it "is not valid without a longitude" do
+  it "is not valid without longitude" do
     subject.lng = nil
     expect(subject).to_not be_valid
   end

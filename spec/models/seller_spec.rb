@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# Test suite for the Realtor model
+# Test suite for the Seller model
 RSpec.describe Seller, type: :model do
   # Validation test
 
