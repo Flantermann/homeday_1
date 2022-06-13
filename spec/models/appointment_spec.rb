@@ -36,4 +36,10 @@ RSpec.describe Appointment, type: :model do
     subject.time = nil
     expect(subject).to_not be_valid
   end
+
+  # Association test
+  describe 'associations' do
+    it { should belong_to(:seller).class_name('Seller') }
+    it { should belong_to(:realtor).class_name('Realtor') }
+  end
 end
