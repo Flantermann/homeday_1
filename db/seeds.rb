@@ -4,7 +4,7 @@ require 'json'
 
 puts "creating realtors..."
 
-path = Rails.root.join('app', 'lib','realtors.json')
+path = Rails.root.join('lib', 'seeds', 'realtors.json')
 realtors = JSON.parse(File.read(path))
 
 realtors["realtors"].each do |realtor|
