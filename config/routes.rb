@@ -14,3 +14,15 @@ Rails.application.routes.draw do
     end
   end
 end
+
+# VARIANTE:
+# resources :realtors, only: [] do
+#     member do
+#       resources :appointments, only: [] do
+#         collection do
+#           get 'past'
+#           get 'future'
+#         end
+#       end
+#     end
+#   end
