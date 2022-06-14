@@ -11,6 +11,7 @@ require 'rails_helper'
 # Test suite for the Appointment model
 RSpec.describe Appointment, type: :model do
   # Validation test
+  # ensure columns lat, lng, address and time are present before saving
 
   # alternative shoulda-syntax, but output is " is expected to..."
   # describe 'validations' do
@@ -59,3 +60,10 @@ RSpec.describe Appointment, type: :model do
     it { should belong_to(:realtor).class_name('Realtor') }
   end
 end
+
+# NEEDED TESTS
+# check if time of appointment is at least 48h in the future is validated
+# check if date is weekday is validated
+# check if working hours are validated
+# check wether realtor is available (has no other appointments)
+# or does this go on realtor_spec?
