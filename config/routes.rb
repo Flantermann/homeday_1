@@ -3,4 +3,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  resources :appointments, only: :create
+
+  resources :realtors, only: :show do
+    resources :appointments, only: :index do
+      # member do
+      #   get „past“, to: „appointments#past“
+      #   get „future“, to: „appointments#future“
+      # end
+    end
+  end
 end
