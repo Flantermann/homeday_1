@@ -8,24 +8,3 @@ Rails.application.routes.draw do
     end
   end
 end
-
-# VARIANTE:
-# resources :realtors, only: [] do
-#     member do
-#       resources :appointments, only: [] do
-#         collection do
-#           get 'past'
-#           get 'future'
-#         end
-#       end
-#     end
-#   end
-
-  # resources :realtors, only: :show do
-  #   resources :appointments, only: :index do
-  #     # member do
-  #     #   get „past“, to: „appointments#past“
-  #     #   get „future“, to: „appointments#future“
-  #     # end
-  #   end
-  # end

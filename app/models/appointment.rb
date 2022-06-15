@@ -2,8 +2,8 @@ class Appointment < ApplicationRecord
   acts_as_geolocated
   # validations
   validates :lat, :lng, :address, :time, presence: true
-  # must validate time 48h in the future
-  validate :after_48_hours
+  # must validate appropriate hours to appointment
+  validate :hours_to_appointment
   # must validate weekday
   validate :is_weekday
   # must validate timeslot 8-18h
@@ -12,17 +12,32 @@ class Appointment < ApplicationRecord
   belongs_to :seller
   belongs_to :realtor
 
-  def after_48_hours
-    if time.present? && time > Time.now && time.between?(Time.now, Time.now + (60*60*48))
-      # can be refactored as "Time.now + 48.hours" I think
-      errors.add(:time, "Appointment can't be scheduled in the next 48 hours")
+  private
+
+  def hours_to_appointment
+    day_of_week = Time.now.wday
+
+    if time.present? && time > Time.now
+      # if today is Sunday, Monday, Tuesday or Wednesday:
+      # appointment must be 48 hours in the future
+      if day_of_week.wday == 0 || day_of_week.wday == 1 || day_of_week.wday == 2 || day_of_week.wday == 3
+        if time.between?(Time.now, Time.now + (60*60*48))
+          errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
+        end
+      # if today is Thursday:
+      # appointment can't be before Monday
+      elsif day_of_week.wday == 4
+        if time.between?(Time.now, Time.now + (60*60*96))
+          errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
+        end
+      # if today is Friday or Saturday:
+      # appointment can't be before Tuesday
+      elsif day_of_week.wday == 5 || day_of_week.wday == 6
+        if time.between?(Time.now, Time.now + (60*60*120))
+          errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
+        end
+      end
     end
-    # this should actually check more, because Sat and Sun are not in the
-    # 48 hours rule. So it should be more something like
-    # if today is sunday, monday, tuesday or wednesday: appointment must be 48 hours in the future
-    # if today is thursday: date can't be before monday
-    # if today is friday: date can't be before tuesday
-    # if today is saturday: date can't be before wednesday (or tuesday?)
   end
 
   def is_weekday
@@ -35,5 +50,6 @@ class Appointment < ApplicationRecord
     if time.strftime('%H:%M').to_i < 8 || time.strftime('%H:%M').to_i > 18
       errors.add(:time, "Appointment must be scheduled between 8 and 18 h")
     end
+    # it would probably need some time zoning here
   end
 end
