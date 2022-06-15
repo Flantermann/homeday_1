@@ -54,6 +54,10 @@ GEM
     activerecord (7.0.3)
       activemodel (= 7.0.3)
       activesupport (= 7.0.3)
+    activerecord-postgres-earthdistance (0.7.2)
+      activerecord (>= 3.1)
+      pg
+      rake
     activestorage (7.0.3)
       actionpack (= 7.0.3)
       activejob (= 7.0.3)
@@ -192,6 +196,7 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
+  activerecord-postgres-earthdistance
   bootsnap
   debug
   factory_bot_rails
