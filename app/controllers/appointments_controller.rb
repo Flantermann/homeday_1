@@ -2,13 +2,24 @@ class AppointmentsController < ApplicationController
   before_action :set_realtor, only: [:past, :future]
 
   def create
+    # MAYBE THIS SHOULD BE A SERVICE OBJECT
     # create new seller from seller params
+    # seller = Seller.new(name: appointment.seller.name, phone: appointment.seller.phone)
     # create new appointment @appointment = Appointment.new(appointment_params)
     # if appointment.save (so if it passes all validations)
       # look for closest realtor
-    # if closest realtor is found
+      # lat = appointment.lat
+      # lng = appointment.lng
+      # realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
+      # if realtor is found, then check for their availability (how?)
+        # if realtor has appointment at appointment.time or int he 30 minutes before said time, they are not available
+        # is no realtor is found: provide error message
+          # if realtor == nil, return error message
+    # if closest realtor is found and available
       # save seller
       # then save appointment
+    # appointment.realtor
+    # appointment.seller
     # return response
     # else: corresponding error message
   end
