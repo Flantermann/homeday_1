@@ -25,13 +25,15 @@ class AppointmentsController < ApplicationController
   end
 
   def past
-    @past_appointments = realtor.appointments.where(time: (Time.now.months_ago(1).beginning_of_month)..(Time.now.months_ago(1).end_of_month)).order(time: :desc)
-    # how to handle output?
+    past_appointments = realtor.appointments.where(time: (Time.now.months_ago(1).beginning_of_month)..(Time.now.months_ago(1).end_of_month)).order(time: :desc)
+    # better way to handle output?
+    render json: past_appointments
   end
 
   def future
-    @future_appointments = realtor.appointments.where(time: (Time.now.beginning_of_month + 1.month)..(Time.now.beginning_of_month + 2.month - 1.day)).order(:time)
-    # how to handle output?
+    future_appointments = realtor.appointments.where(time: (Time.now.beginning_of_month + 1.month)..(Time.now.beginning_of_month + 2.month - 1.day)).order(:time)
+    # better way to handle output?
+    render json: future_appointments?
   end
 
   private
