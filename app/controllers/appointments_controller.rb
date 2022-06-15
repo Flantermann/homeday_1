@@ -3,8 +3,6 @@ class AppointmentsController < ApplicationController
 
   def create
     # MAYBE THIS SHOULD BE A SERVICE OBJECT
-    # create new seller from seller params
-    # seller = Seller.new(name: appointment.seller.name, phone: appointment.seller.phone)
     # create new appointment @appointment = Appointment.new(appointment_params)
     # if appointment.save (so if it passes all validations)
       # look for closest realtor
@@ -16,10 +14,12 @@ class AppointmentsController < ApplicationController
         # is no realtor is found: provide error message
           # if realtor == nil, return error message
     # if closest realtor is found and available
-      # save seller
+      # create new seller from seller params
+      # seller = Seller.new(name: appointment.seller.name, phone: appointment.seller.phone)save seller
+      # seller.save
       # then save appointment
-    # appointment.realtor
-    # appointment.seller
+    # appointment.realtor = realtor
+    # appointment.seller = seller
     # return response
     # else: corresponding error message
   end
