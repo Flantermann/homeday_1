@@ -3,25 +3,29 @@ class Api::V1::AppointmentsController < ApplicationController
 
   def create
     # MAYBE THIS SHOULD BE A SERVICE OBJECT
-    # create new appointment @appointment = Appointment.new(appointment_params)
+    # create new appointment
+    appointment = Appointment.new(appointment_params)
     # if appointment.save (so if it passes all validations)
-      # look for closest realtor
-      # lat = appointment.lat
-      # lng = appointment.lng
-      # realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
-      # if realtor is found, then check for their availability (how?)
-        # if realtor has appointment at appointment.time or int he 30 minutes before said time, they are not available
+    if appointment.save
+      # find closest realtor
+      lat = appointment.lat
+      lng = appointment.lng
+      realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
+      if realtor == nil
+        # that means no realtor is working in the area
+        # give meaningful error message
+      else
+        # if realtor is found, then check for their availability (how?)
+        # if realtor has appointment at appointment.time or in the 30 minutes before said time, they are not available
         # is no realtor is found: provide error message
-          # if realtor == nil, return error message
-    # if closest realtor is found and available
-      # create new seller from seller params
-      # seller = Seller.new(name: appointment.seller.name, phone: appointment.seller.phone)save seller
-      # seller.save
-      # then save appointment
-    # appointment.realtor = realtor
-    # appointment.seller = seller
-    # return response --> render json: @appointment, status: :created
-    # else: corresponding error message --> how?
+        appointment.realtor = realtor
+      end
+      seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)save seller
+      appointment.seller = seller
+      render json: appointment, status: :created
+    else
+      # corresponding error message --> how?
+    end
   end
 
   def past

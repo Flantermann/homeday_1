@@ -9,8 +9,8 @@ class Appointment < ApplicationRecord
   # must validate timeslot 8-18h
   validate :business_hours
   # associations
-  belongs_to :seller
-  belongs_to :realtor
+  belongs_to :seller, optional: true # do I need optional? If not, get rid of it
+  belongs_to :realtor, optional: true # do I need optional? If not, get rid of it
 
   private
 
