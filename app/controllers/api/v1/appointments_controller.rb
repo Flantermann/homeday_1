@@ -45,6 +45,7 @@ class Api::V1::AppointmentsController < ApplicationController
 
   def set_realtor
     realtor = Realtor.find(params[:id])
+    # this needs to be changed
   end
 
   def appointment_params
