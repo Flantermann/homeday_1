@@ -1,4 +1,5 @@
 class Appointment < ApplicationRecord
+  acts_as_geolocated
   # validations
   validates :lat, :lng, :address, :time, presence: true
   # must validate time 48h in the future
@@ -16,6 +17,9 @@ class Appointment < ApplicationRecord
       # can be refactored as "Time.now + 48.hours" I think
       errors.add(:time, "Appointment can't be scheduled in the next 48 hours")
     end
+    # this shild actually check more, because Sat and Sun are not in the
+    # 48 hours rule. So it should be more something like
+    # f
   end
 
   def is_weekday
