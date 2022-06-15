@@ -2,6 +2,15 @@ class AppointmentsController < ApplicationController
   before_action :set_realtor, only: [:past, :future]
 
   def create
+    # create new seller from seller params
+    # create new appointment @appointment = Appointment.new(appointment_params)
+    # if appointment.save (so if it passes all validations)
+      # look for closest realtor
+    # if closest realtor is found
+      # save seller
+      # then save appointment
+    # return response
+    # else: corresponding error message
   end
 
   def past
@@ -18,5 +27,9 @@ class AppointmentsController < ApplicationController
 
   def set_realtor
     realtor = Realtor.find(params[:id])
+  end
+
+  def appointment_params
+    params.require(:appointment).permit(:lat, :lng, :address, :time)
   end
 end

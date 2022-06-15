@@ -3,11 +3,11 @@ class Appointment < ApplicationRecord
   # validations
   validates :lat, :lng, :address, :time, presence: true
   # must validate time 48h in the future
-  validates :after_48_hours
+  validate :after_48_hours
   # must validate weekday
-  validates :is_weekday
+  validate :is_weekday
   # must validate timeslot 8-18h
-  validates :business_hours
+  validate :business_hours
   # associations
   belongs_to :seller
   belongs_to :realtor
@@ -17,9 +17,12 @@ class Appointment < ApplicationRecord
       # can be refactored as "Time.now + 48.hours" I think
       errors.add(:time, "Appointment can't be scheduled in the next 48 hours")
     end
-    # this shild actually check more, because Sat and Sun are not in the
+    # this should actually check more, because Sat and Sun are not in the
     # 48 hours rule. So it should be more something like
-    # f
+    # if today is sunday, monday, tuesday or wednesday: appointment must be 48 hours in the future
+    # if today is thursday: date can't be before monday
+    # if today is friday: date can't be before tuesday
+    # if today is saturday: date can't be before wednesday (or tuesday?)
   end
 
   def is_weekday
