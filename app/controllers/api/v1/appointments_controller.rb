@@ -4,15 +4,18 @@ class Api::V1::AppointmentsController < ApplicationController
     # MAYBE THIS SHOULD BE A SERVICE OBJECT
     # create new appointment
     appointment = Appointment.new(appointment_params)
-    # if appointment.save (so if it passes all validations)
+    seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)
+    # here a search of the seller in the database could be added to check wether seller already exists
+    appointment.seller = seller
     if appointment.save
+      # if appointment.save (so if it passes all validations)
       # find closest realtor
       lat = appointment.lat
       lng = appointment.lng
       realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
       if realtor == nil
         # that means no realtor is working in the area
-        # give meaningful error message
+        errors.add(:appointment, "no realtor available within 20km radius")
       else
         # still missing:
           # if realtor is found, then check for their availability (how?)
@@ -20,9 +23,6 @@ class Api::V1::AppointmentsController < ApplicationController
           # is no realtor is found: provide error message
         appointment.realtor = realtor #should this be an update of saved appointment instance?
       end
-      seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)
-      # vielleicht erstmal seller suchen, über seller.find
-      appointment.seller = seller
       render json: appointment, status: :created
     else
       # corresponding error message --> how?

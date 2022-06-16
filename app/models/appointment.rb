@@ -26,13 +26,13 @@ class Appointment < ApplicationRecord
         end
       # if today is Thursday:
       # appointment can't be before Monday
-      elsif day_of_week.wday == 4
+      elsif day_of_week == 4
         if time.between?(Time.now, Time.now + (60*60*96))
           errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
         end
       # if today is Friday or Saturday:
       # appointment can't be before Tuesday
-      elsif day_of_week.wday == 5 || day_of_week.wday == 6
+      elsif day_of_week == 5 || day_of_week == 6
         if time.between?(Time.now, Time.now + (60*60*120))
           errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
         end
