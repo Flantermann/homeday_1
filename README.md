@@ -21,6 +21,9 @@ A coding assigment for Homeday: Build an API to connect a seller to the nearest 
 ### Time
 * time zones aren't properly considered at the moment
 
+### Realtor's calendar
+* a method to check the availabilty of the realtor should be added
+
 ### Testing
 * the api needs request tests and better model tests
 * since I have never worked with rspec before, I was only able to write simple tests and tested the api with postman
