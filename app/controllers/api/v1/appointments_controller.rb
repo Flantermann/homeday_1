@@ -10,51 +10,39 @@ class Api::V1::AppointmentsController < ApplicationController
     if appointment.save
       # if appointment.save (so if it passes all validations)
       # find closest realtor
-      lat = appointment.lat
-      lng = appointment.lng
-      realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
+      closest_realtor(appointment)
       if realtor == nil
         # that means no realtor is working in the area
-        errors.add(:appointment, "no realtor available within 20km radius")
+        errors.add(:appointment, "no realtor available within 20km radius"), status: :unprocessable_entity
       else
-        # still missing:
-          # if realtor is found, then check for their availability (how?)
-          # if realtor has appointment at appointment.time or in the 30 minutes before said time, they are not available
-          # is no realtor is found: provide error message
-        appointment.realtor = realtor #should this be an update of saved appointment instance?
+        appointment.realtor = realtor
       end
       render json: appointment, status: :created
     else
-      # corresponding error message --> how?
+      errors.add(:appointment), status: :unprocessable_entity
     end
   end
 
-  def past
-    past_appointments = realtor.appointments.where(time: (Time.now.months_ago(1).beginning_of_month)..(Time.now.months_ago(1).end_of_month)).order(time: :desc)
-    # better way to handle output?
-    render json: past_appointments
-  end
-
-  def future
-    future_appointments = realtor.appointments.where(time: (Time.now.beginning_of_month + 1.month)..(Time.now.beginning_of_month + 2.month - 1.day)).order(:time)
-    # better way to handle output?
-    render json: future_appointments
-  end
-
   private
-
-  def set_realtor
-    realtor = Realtor.find(params[:id])
-  end
 
   def appointment_params
     params.require(:appointment).permit(:lat, :lng, :address, :time, :seller)
   end
 
-  def realtor_has_conflicts?
-    # if realtor is found, then check for their availability (how?)
-    # if realtor has appointment at appointment.time
-    #or in the 30 minutes before said time, they are not available
-    # is no realtor is found: provide error message
+  def closest_realtor(appointment)
+    lat = appointment.lat
+    lng = appointment.lng
+    realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
   end
+
+  # IS METHOD IS NOT WORKING YET, NEEDS IMPROVEMENT
+  # def realtor_has_conflicts?
+  #   # if realtor is found, then check for their availability
+  #   # can't have appointment at the time or in the 30 minutes before that
+  #   realtor.appointments.each do |app|
+  #     if app.time == appointment.time || (appointment.time - 30.minutes..appointment.time - 1.minute).include?(app.time)
+  #       errors.add(:appointment, "closest realtor already has existing appointment"), status: :unprocessable_entity
+  #     end
+  #   end
+  # end
 end
