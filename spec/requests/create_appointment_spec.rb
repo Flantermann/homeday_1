@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Appointments", type: :request do
-  # the following requests should be tested:
+  # at least the following requests should be tested:
 
   # it returns status code 201, if appointment was successfully created
   # test if data output is in correct format

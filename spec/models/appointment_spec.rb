@@ -1,13 +1,5 @@
 require 'rails_helper'
 
-# wie schreibe ich den Test für die "is valid with valid attributes" um,
-# jetzt wo ich die associations habe? Da werden jetzt als attributes ja auch seller_id
-# und realtor_id erwartet. Aber ich kann da ja nicht einfach
-# irgendeine ID reinschreiben, oder? --> Nee, das funktioniert nicht
-# wie kann man dann das dann regeln?
-# vielleicht ist das ein Fall für FactoryBot?
-# maybe write test to check if lat/lng correspond to correct address?
-
 # Test suite for the Appointment model
 RSpec.describe Appointment, type: :model do
 

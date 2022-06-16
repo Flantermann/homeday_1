@@ -1,7 +1,7 @@
 class Api::V1::AppointmentsController < ApplicationController
 
   def create
-    # in a best case scenario, most of this should probably transferred into a service object
+    # in a best case scenario, most of this should probably be transferred into a service object
     # create new appointment
     appointment = Appointment.new(appointment_params)
     seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)
