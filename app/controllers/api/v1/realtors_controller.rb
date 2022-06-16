@@ -1,4 +1,4 @@
-class RealtorsController < ApplicationController
+class Api::V1::RealtorsController < ApplicationController
   before_action :set_realtor, only: [:past, :future]
 
   def past
