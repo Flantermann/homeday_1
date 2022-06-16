@@ -1,7 +1,7 @@
 class Api::V1::AppointmentsController < ApplicationController
 
   def create
-    # MAYBE THIS SHOULD BE A SERVICE OBJECT
+    # in a best case scenario, most of this should probably transferred into a service object
     # create new appointment
     appointment = Appointment.new(appointment_params)
     seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)
@@ -15,6 +15,7 @@ class Api::V1::AppointmentsController < ApplicationController
         # that means no realtor is working in the area
         errors.add(:appointment, "no realtor available within 20km radius"), status: :unprocessable_entity
       else
+        # realtor_has_conflicts?
         appointment.realtor = realtor
       end
       render json: appointment, status: :created
@@ -35,7 +36,7 @@ class Api::V1::AppointmentsController < ApplicationController
     realtor = Realtor.within_radius(20_000, lat, lng).order_by_distance.first
   end
 
-  # IS METHOD IS NOT WORKING YET, NEEDS IMPROVEMENT
+  # THIS METHOD IS NOT WORKING YET, NEEDS IMPROVEMENT
   # def realtor_has_conflicts?
   #   # if realtor is found, then check for their availability
   #   # can't have appointment at the time or in the 30 minutes before that
