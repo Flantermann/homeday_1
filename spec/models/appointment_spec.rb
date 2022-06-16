@@ -10,16 +10,6 @@ require 'rails_helper'
 
 # Test suite for the Appointment model
 RSpec.describe Appointment, type: :model do
-  # Validation test
-  # ensure columns lat, lng, address and time are present before saving
-
-  # alternative shoulda-syntax, but output is " is expected to..."
-  # describe 'validations' do
-  #   it { should validate_presence_of(:lat) }
-  #   it { should validate_presence_of(:lng) }
-  #   it { should validate_presence_of(:address) }
-  #   it { should validate_presence_of(:time) }
-  # end
 
   subject {
     described_class.new(lat: 52.5019145,
@@ -29,10 +19,6 @@ RSpec.describe Appointment, type: :model do
                         seller_id: 1,
                         realtor_id: 1)
                       }
-
-  it "is valid with valid attributes" do
-    expect(subject).to be_valid
-  end
 
   it "is not valid without lat" do
     subject.lat = nil
@@ -49,21 +35,11 @@ RSpec.describe Appointment, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it "is not valid without time" do
-    subject.time = nil
-    expect(subject).to_not be_valid
-  end
+  # needs test for validation of presence of time
+  # needs tests for validations of timeframe (48 hours rule, weekday, 8-18h)
 
   # Association test
   describe 'associations' do
     it { should belong_to(:seller).class_name('Seller') }
-    it { should belong_to(:realtor).class_name('Realtor') }
   end
 end
-
-# NEEDED TESTS
-# check if time of appointment is at least 48h in the future is validated
-# check if date is weekday is validated
-# check if working hours are validated
-# check wether realtor is available (has no other appointments)
-# or does this go on realtor_spec?
