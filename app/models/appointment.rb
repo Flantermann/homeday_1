@@ -9,7 +9,7 @@ class Appointment < ApplicationRecord
   # must validate timeslot 8-18h
   validate :business_hours
   # associations
-  belongs_to :seller, optional: true # do I need optional? If not, get rid of it
+  belongs_to :seller
   belongs_to :realtor, optional: true # do I need optional? If not, get rid of it
 
   private
@@ -20,7 +20,7 @@ class Appointment < ApplicationRecord
     if time.present? && time > Time.now
       # if today is Sunday, Monday, Tuesday or Wednesday:
       # appointment must be 48 hours in the future
-      if day_of_week.wday == 0 || day_of_week.wday == 1 || day_of_week.wday == 2 || day_of_week.wday == 3
+      if day_of_week == 0 || day_of_week == 1 || day_of_week == 2 || day_of_week == 3
         if time.between?(Time.now, Time.now + (60*60*48))
           errors.add(:time, "Appointment can't be scheduled in the next 48 hours, excluding weekends")
         end

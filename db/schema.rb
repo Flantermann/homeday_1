@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_103757) do
     t.decimal "lat", precision: 10, scale: 6
     t.decimal "lng", precision: 10, scale: 6
     t.string "address"
-    t.time "time"
+    t.datetime "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "seller_id"

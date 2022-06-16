@@ -49,6 +49,13 @@ class Api::V1::AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.require(:appointment).permit(:lat, :lng, :address, :time)
+    params.require(:appointment).permit(:lat, :lng, :address, :time, :seller)
+  end
+
+  def realtor_has_conflicts?
+    # if realtor is found, then check for their availability (how?)
+    # if realtor has appointment at appointment.time
+    #or in the 30 minutes before said time, they are not available
+    # is no realtor is found: provide error message
   end
 end
