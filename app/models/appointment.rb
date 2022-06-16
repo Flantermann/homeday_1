@@ -10,8 +10,7 @@ class Appointment < ApplicationRecord
   validate :business_hours
   # associations
   belongs_to :seller
-  belongs_to :realtor, optional: true # do I need optional? If not, get rid of it
-
+  belongs_to :realtor, optional: true # optional is needed to be able to save without realtor
   private
 
   def hours_to_appointment
