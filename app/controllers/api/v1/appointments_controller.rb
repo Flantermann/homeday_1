@@ -1,5 +1,4 @@
 class Api::V1::AppointmentsController < ApplicationController
-  before_action :set_realtor, only: [:past, :future]
 
   def create
     # MAYBE THIS SHOULD BE A SERVICE OBJECT
@@ -22,6 +21,7 @@ class Api::V1::AppointmentsController < ApplicationController
         appointment.realtor = realtor #should this be an update of saved appointment instance?
       end
       seller = Seller.create(name: appointment.seller.name, phone: appointment.seller.phone)
+      # vielleicht erstmal seller suchen, über seller.find
       appointment.seller = seller
       render json: appointment, status: :created
     else
@@ -45,7 +45,6 @@ class Api::V1::AppointmentsController < ApplicationController
 
   def set_realtor
     realtor = Realtor.find(params[:id])
-    # this needs to be changed
   end
 
   def appointment_params
