@@ -14,7 +14,7 @@ A coding assigment for Homeday: Build an API to connect a seller to the nearest 
 * if not present, install postgres
 * set up database: rails db:create, rails db:migrate
 * seed database with realtors: rails db:seed
-* start server: rails s
+* run tests with spec
 
 ## Improvements
 
